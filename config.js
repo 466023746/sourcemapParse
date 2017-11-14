@@ -4,5 +4,5 @@
 
 module.exports = {
     matchUrl: ['/kibana/public/elasticsearch/_msearch'],
-    port: 8080
+    port: 80
 };
