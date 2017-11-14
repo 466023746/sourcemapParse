@@ -42,6 +42,10 @@ var httpServer = http.createServer((req, res) => {
             headers: req.headers
         };
 
+        if (!filterRequest(requestUrl, res)) {
+            return
+        }
+
         _request(options, body, function (err, data, obj) {
             var header = obj.headers || {};
 
@@ -468,6 +472,16 @@ function parse(str) {
 
 function formatCacheName(sourceFile, line, column) {
     return sourceFile + '-' + line + '-' + column
+}
+
+function filterRequest(requestUrl, res) {
+    if (requestUrl.indexOf('/msdownload/') != -1) {
+        console.log('filter request', requestUrl);
+        res.writeHead(403);
+        res.end();
+        return false
+    }
+    return true
 }
 
 process.on('uncaughtException', function (err) {
